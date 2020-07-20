@@ -16,4 +16,12 @@ class BuyController extends AbstractController
             'controller_name' => 'BuyController',
         ]);
     }
+
+
+    //realizar una compra de varios articulos
+    // la compra debe llamar al controlador de producto para registrar los productos
+    //recibe una lista de articulos de compra
+
+    
+
 }

@@ -6,7 +6,9 @@ use App\Service\GenericService;
 
 use App\Repository\ProductRepository;
 use App\Entity\Product;
-// use App\Entity\Category;
+
+
+
 
 class ProductService extends GenericService
 {
@@ -33,5 +35,8 @@ class ProductService extends GenericService
         return $listProducts;
     }
     
-    
+    ///>>>>>>>>>>>>>>> opinion <<<<<<<<<<<<<<<<<<<<<
+
+
+
 }

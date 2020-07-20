@@ -232,6 +232,7 @@ class Product
 
     public function addCategory(?Category $aCategory): self
     {   //produce error agregar dos veces el mismo elemento en la DB
+        //elimina duplicados en categorias
         if( !$this->categorys->contains($aCategory) )
         {
             $this->categorys->add($aCategory);
