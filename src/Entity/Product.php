@@ -41,6 +41,11 @@ class Product
     private $season;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Buy", fetch="EAGER")
+     */
+    private $buy;
+
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Gender", fetch="EAGER")
      */
     private $gender;
@@ -79,7 +84,7 @@ class Product
     //"Season{verano,invierno..}","Gender{hombre,mujer,unisex}"
     public function __construct($name=null,$model=null,$description=null,$code=null,
                         $buyQuantity=null,$unitPrice=null,$salePrice=null,      
-                        $season=null,$gender=null)
+                        $season=null,$gender=null,$buy=null)
     {
         $this->setName($name);
         $this->setModel($model);
@@ -90,9 +95,11 @@ class Product
         $this->setStock($buyQuantity);
         $this->setUnitPrice($unitPrice);
         $this->setSalePrice($salePrice);
+        
 
         $this->setSeason($season);
         $this->setGender($gender);
+        $this->setBuy($buy);
         
         $this->categorys = new ArrayCollection();
     }
@@ -134,6 +141,18 @@ class Product
     public function setSeason(?Season $season): self
     {
         $this->season = $season;
+
+        return $this;
+    }
+
+    public function getBuy(): ?Buy
+    {
+        return $this->buy;
+    }
+
+    public function setBuy(?Buy $buy): self
+    {
+        $this->buy = $buy;
 
         return $this;
     }

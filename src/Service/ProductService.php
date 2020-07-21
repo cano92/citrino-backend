@@ -35,8 +35,5 @@ class ProductService extends GenericService
         return $listProducts;
     }
     
-    ///>>>>>>>>>>>>>>> opinion <<<<<<<<<<<<<<<<<<<<<
-
-
 
 }

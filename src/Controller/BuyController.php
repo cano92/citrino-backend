@@ -2,10 +2,14 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+//use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
-class BuyController extends AbstractController
+use App\Entity\Payment;
+use App\Entity\Buy;
+
+
+class BuyController extends GenericController
 {
     /**
      * @Route("/buy", name="buy")
@@ -18,10 +22,31 @@ class BuyController extends AbstractController
     }
 
 
-    //realizar una compra de varios articulos
-    // la compra debe llamar al controlador de producto para registrar los productos
-    //recibe una lista de articulos de compra
+    /**
+     * @Route("/compras/iniciar", name="startBuy")
+     */
+    public function registerNewBuy()
+    {
+        $payment = $this->paymentService->findId(1);
+                    //"compra1","descripcion","modpagoId"
+        $buy = new Buy("compra3","descripcion de compra3",$payment);
 
-    
+        $this->buyService->save($buy);
+        //register Buy in session
+        $this->session->set('currentBuy', $buy );
+
+        return $this->render('buy/index.html.twig', [ 'controller_name' => 'BuyController',   ]);
+    }
+
+    /**
+     * @Route("/compras/finalizar", name="closeBuy")
+     */
+    public function finalizeNewBuy()
+    {   //eliminar la session de la compra
+        $this->session->remove("currentBuy");
+        //redireccionar
+        return $this->render('buy/index.html.twig', [ 'controller_name' => 'BuyController', ]);
+    }
+
 
 }

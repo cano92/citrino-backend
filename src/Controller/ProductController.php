@@ -19,17 +19,18 @@ class ProductController extends GenericController
 
 
     /**
-     * @Route("/product/new", name="newProducto")
+     * @Route("/producto/nuevo", name="newProducto")
      */
     public function registerProduct( )
     {
-        //"nombre","modelo","descripcion","codigo","cantidad","precioUnidad","PrecioVenta","temporadaID","GeneroID"
-        $product = $this->createProduct("nombre3","model3","descripcion2","cod2",1,100,120,3,1);
+        //"nombre","modelo","descripcion","codigo","cantidad","precioUnidad","PrecioVenta","temporadaID","GeneroID","compraID"
+        $product = $this->createProduct("nombre5","model5","descripcion5","cod5",2,100,120,3,1,1);
         //categorys
         $this->addCategorys( $product,[1,2,20,"as"] );
 
         $this->productService->save($product);
-        //dump($product);
+        
+        $this->updatePriceTotalBuy(200);
 
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
@@ -38,15 +39,13 @@ class ProductController extends GenericController
 
             //"nombre","modelo","descripcion","codigo","cantidad","precioUnidad","PrecioVenta"
     private function createProduct($name,$model,$description,$cod,$quantity,$unitPrice,$salePrice,      
-                            $seasonId,$genderId)
+                            $seasonId,$genderId,$buyId)
     {
-        //inyeccion de dependencies que no sea por parametro
-        
-        //***** que pasa con ID no validos ******
         $season = $this->seasonService->findId($seasonId);
         $gender = $this->genderService->findId($genderId);
+        $buy = $this->buyService->findId($genderId);
        
-        return new Product($name,$model,$description,$cod,$quantity,$unitPrice,$salePrice,$season,$gender);
+        return new Product($name,$model,$description,$cod,$quantity,$unitPrice,$salePrice,$season,$gender,$buy);
     }
 
     private function addCategorys( $product, $listCategorys )
@@ -62,6 +61,24 @@ class ProductController extends GenericController
         return $product;
     }
 
+    private function updatePriceTotalBuy( $price )
+    {   //buy de session no es el mismo obj de la DB (en vez de actualizar crea otro obj)
+        $buy = $this->session->get('currentBuy');
+
+        $currentBuy = $this->buyService->findId( $buy->getId() );
+
+        $currentBuy->sumPriceTotal( $price );
+        $this->buyService->save($currentBuy);
+    } 
+
+    //--devoluciones nose puede devolver mas cantidad que la que tenga en stock
+    // de lo contrario esta devolviendo lo que no tiene
+    //hay que indicar que producto se esta devolviendo y que cantidad de elementos
+
+
 
     
+    //*****  editar producto
+
+
 }

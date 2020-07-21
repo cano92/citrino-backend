@@ -103,5 +103,9 @@ class Transaction
         return $this;
     }
 
+    public function sumPriceTotal(int $number)
+    {
+        $this->setPriceTotal( $this->getPriceTotal() + $number );
+    }
   
 }

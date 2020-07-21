@@ -15,5 +15,9 @@ class BuyService extends GenericService
         parent::__construct(Buy::class);
     }
 
+    //actualizar preciototal cuando se agrega un nuevo producto o cuando se devuelve algo
+    // hablar detalles de la devolucion
+
+    
 
 }
