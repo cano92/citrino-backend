@@ -29,7 +29,7 @@ class BuyController extends GenericController
     {
         $payment = $this->paymentService->findId(1);
                     //"compra1","descripcion","modpagoId"
-        $buy = new Buy("compra 4","descripcion de compra 4",$payment);
+        $buy = new Buy("compra 4","descripcion de compra",$payment);
 
         $this->buyService->save($buy);
         //register Buy in session
@@ -48,5 +48,5 @@ class BuyController extends GenericController
         return $this->render('buy/index.html.twig', [ 'controller_name' => 'BuyController', ]);
     }
 
-
+    //>>>>>>>>>>>>>><< agregar funcion de perdidas <<<<<<<<<<<
 }

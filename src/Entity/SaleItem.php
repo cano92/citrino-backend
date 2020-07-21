@@ -18,7 +18,7 @@ class SaleItem
     private $id;
 
      /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Product", cascade={"persist"}, fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Product", fetch="EAGER")
      */
     private $product;
 
@@ -32,8 +32,13 @@ class SaleItem
      */
     private $amount;
 
+     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Sale", fetch="EAGER")
+     */
+    private $sale;
 
-    public function __construct( $aProduct=null, $aQuantity=null, $aAmount=null )
+
+    public function __construct( $aProduct=null, $aQuantity=null, $aAmount=null, $aSale=null )
     {
         $this->setProduct($aProduct);
         $this->setQuantity($aQuantity);
@@ -41,6 +46,8 @@ class SaleItem
         $currentStock = $aProduct->getStock() - $aQuantity;
         $aProduct->setStock($currentStock);
         $this->setAmount($aAmount);
+
+        $this->setSale($aSale);
     }
 
     public function getId(): ?int
@@ -80,6 +87,18 @@ class SaleItem
     public function setAmount(int $amount): self
     {
         $this->amount = $amount;
+
+        return $this;
+    }
+
+    public function getSale(): ?Sale
+    {
+        return $this->sale;
+    }
+
+    public function setSale(Sale $sale): self
+    {
+        $this->sale = $sale;
 
         return $this;
     }
