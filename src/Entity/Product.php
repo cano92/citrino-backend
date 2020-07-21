@@ -80,6 +80,11 @@ class Product
      */
     private $salePrice;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $repaymentQuantity;
+
      //"nombre","modelo","descripcion","codigo","cantidad","precioUnidad","PrecioVenta"
     //"Season{verano,invierno..}","Gender{hombre,mujer,unisex}"
     public function __construct($name=null,$model=null,$description=null,$code=null,
@@ -95,7 +100,7 @@ class Product
         $this->setStock($buyQuantity);
         $this->setUnitPrice($unitPrice);
         $this->setSalePrice($salePrice);
-        
+        $this->setRepaymentQuantity(0); //devoluciones
 
         $this->setSeason($season);
         $this->setGender($gender);
@@ -239,6 +244,18 @@ class Product
         $this->salePrice = $salePrice;
 
         return $this;
+    }
+
+    public function setRepaymentQuantity(int $repaymentQuantity ):self
+    {
+        $this->repaymentQuantity = $repaymentQuantity;
+
+        return $this;
+    }
+
+    public function getRepaymentQuantity(): ?int
+    {
+        return $this->repaymentQuantity;
     }
 
     /**

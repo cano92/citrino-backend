@@ -29,7 +29,7 @@ class BuyController extends GenericController
     {
         $payment = $this->paymentService->findId(1);
                     //"compra1","descripcion","modpagoId"
-        $buy = new Buy("compra3","descripcion de compra3",$payment);
+        $buy = new Buy("compra 4","descripcion de compra 4",$payment);
 
         $this->buyService->save($buy);
         //register Buy in session

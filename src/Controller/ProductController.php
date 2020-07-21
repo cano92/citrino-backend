@@ -22,15 +22,17 @@ class ProductController extends GenericController
      * @Route("/producto/nuevo", name="newProducto")
      */
     public function registerProduct( )
-    {
+    {   // recuperar el ID de la compra
+        $buy = $this->session->get('currentBuy');
+
         //"nombre","modelo","descripcion","codigo","cantidad","precioUnidad","PrecioVenta","temporadaID","GeneroID","compraID"
-        $product = $this->createProduct("nombre5","model5","descripcion5","cod5",2,100,120,3,1,1);
+        $product = $this->createProduct("nombre 6","model 6","descripcion 6","cod6",2,100,120,3,1, $buy->getId() );
         //categorys
         $this->addCategorys( $product,[1,2,20,"as"] );
 
         $this->productService->save($product);
-        
-        $this->updatePriceTotalBuy(200);
+        // la compra y el monto a modificar
+        $this->updatePriceTotalBuy($buy->getId(), 200);
 
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
@@ -43,7 +45,7 @@ class ProductController extends GenericController
     {
         $season = $this->seasonService->findId($seasonId);
         $gender = $this->genderService->findId($genderId);
-        $buy = $this->buyService->findId($genderId);
+        $buy = $this->buyService->findId($buyId);
        
         return new Product($name,$model,$description,$cod,$quantity,$unitPrice,$salePrice,$season,$gender,$buy);
     }
@@ -61,23 +63,50 @@ class ProductController extends GenericController
         return $product;
     }
 
-    private function updatePriceTotalBuy( $price )
-    {   //buy de session no es el mismo obj de la DB (en vez de actualizar crea otro obj)
-        $buy = $this->session->get('currentBuy');
+    private function updatePriceTotalBuy(int $buyId, int $price )
+    {   //$buy de session no es el mismo obj de la DB (en vez de actualizar crea otro obj)
+        $currentBuy = $this->buyService->findId( $buyId );
 
-        $currentBuy = $this->buyService->findId( $buy->getId() );
-
-        $currentBuy->sumPriceTotal( $price );
+        $currentBuy->updatePriceTotal( $price );
         $this->buyService->save($currentBuy);
     } 
 
     //--devoluciones nose puede devolver mas cantidad que la que tenga en stock
-    // de lo contrario esta devolviendo lo que no tiene
     //hay que indicar que producto se esta devolviendo y que cantidad de elementos
 
+    /**
+     * @Route("/producto/devuelto", name="repayment")
+     */
+    public function repaymentProduct()
+    {
+        $buy = $this->session->get('currentBuy');
+
+        //--- ID Producto y cantidad a devolver
+        $this->updateRepaymentProduct(19, 1 );
+
+        return $this->render('default/index.html.twig', [
+            'controller_name' => 'DefaultController',
+        ]);
+    }
+
+    private function updateRepaymentProduct(int  $idProduct, int $quantity)
+    {
+        $product = $this->productService->findId( $idProduct );
 
 
-    
+        if( $product->getStock() >= $quantity )
+        {   // update product stock and repayment
+            $product->setStock( $product->getStock() - $quantity);
+            $product->setRepaymentQuantity( $product->getRepaymentQuantity() + $quantity );
+            $this->productService->save($product);
+            
+            //update buy
+            $buy = $this->buyService->findId( $product->getBuy() );
+            $this->updatePriceTotalBuy($buy->getId(),-( $quantity * $product->getUnitPrice() ) );
+        }
+    }
+
+
     //*****  editar producto
 
 
