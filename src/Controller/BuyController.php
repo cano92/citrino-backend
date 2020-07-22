@@ -27,9 +27,12 @@ class BuyController extends GenericController
      */
     public function registerNewBuy()
     {
+        ///>>>>>>>>>> nose puede iniciar una compra si no se finalizo la anterior <<<<<<
+         
+
         $payment = $this->paymentService->findId(1);
                     //"compra1","descripcion","modpagoId"
-        $buy = new Buy("compra 4","descripcion de compra",$payment);
+        $buy = new Buy("compra1","descripcion de compra",$payment);
 
         $this->buyService->save($buy);
         //register Buy in session
@@ -49,4 +52,5 @@ class BuyController extends GenericController
     }
 
     //>>>>>>>>>>>>>><< agregar funcion de perdidas <<<<<<<<<<<
+
 }

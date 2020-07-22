@@ -17,6 +17,11 @@ class SaleItem
      */
     private $id;
 
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $date;
+
      /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Product", fetch="EAGER")
      */
@@ -37,22 +42,43 @@ class SaleItem
      */
     private $sale;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $repaymentQuantity;
+
 
     public function __construct( $aProduct=null, $aQuantity=null, $aAmount=null, $aSale=null )
     {
         $this->setProduct($aProduct);
         $this->setQuantity($aQuantity);
+
+        $this->setDate( new \DateTime("now") );
+
         //resta stock de producto--tener cuidado de no quedar con stock neg
         $currentStock = $aProduct->getStock() - $aQuantity;
         $aProduct->setStock($currentStock);
         $this->setAmount($aAmount);
 
         $this->setSale($aSale);
+        $this->setRepaymentQuantity(0); //devoluciones
     }
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getDate(): ?\DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    public function setDate(\DateTimeInterface $date): self
+    {
+        $this->date = $date;
+
+        return $this;
     }
 
     public function getProduct(): ?Product
@@ -102,4 +128,17 @@ class SaleItem
 
         return $this;
     }
+    
+    public function setRepaymentQuantity(int $repaymentQuantity ):self
+    {
+        $this->repaymentQuantity = $repaymentQuantity;
+
+        return $this;
+    }
+
+    public function getRepaymentQuantity(): ?int
+    {
+        return $this->repaymentQuantity;
+    }
+
 }

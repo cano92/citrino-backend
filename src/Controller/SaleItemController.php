@@ -17,7 +17,8 @@ class SaleItemController extends GenericController
     public function newSaleItem()
     {
         $sale = $this->session->get('currentSale');
-        $this->registerSaleItem( 5, 1,3);
+
+        $this->registerSaleItem( 8, 1,$sale->getId() );
 
         return $this->render('sale_item/index.html.twig', [
             'controller_name' => 'SaleItemController',
@@ -44,7 +45,11 @@ class SaleItemController extends GenericController
     }
 
     // devolver --
-    
+    public function repaymentSaleItem()
+    {
+
+        
+    }
 
 
 }

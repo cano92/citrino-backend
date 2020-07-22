@@ -26,6 +26,11 @@ class Product
     private $name;
 
     /**
+     * @ORM\Column(type="date")
+     */
+    private $date;
+
+    /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Category", cascade={"persist"}, fetch="EAGER")
      */
     private $categorys;
@@ -95,6 +100,8 @@ class Product
         $this->setModel($model);
         $this->setDescription($description);
         $this->setCode($code);
+
+        $this->setDate( new \DateTime("now") );
         
         $this->setBuyQuantity($buyQuantity);
         $this->setStock($buyQuantity);
@@ -122,6 +129,18 @@ class Product
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getDate(): ?\DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    public function setDate(\DateTimeInterface $date): self
+    {
+        $this->date = $date;
 
         return $this;
     }

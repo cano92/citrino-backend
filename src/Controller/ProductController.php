@@ -26,13 +26,15 @@ class ProductController extends GenericController
         $buy = $this->session->get('currentBuy');
 
         //"nombre","modelo","descripcion","codigo","cantidad","precioUnidad","PrecioVenta","temporadaID","GeneroID","compraID"
-        $product = $this->createProduct("nombre 6","model 6","descripcion 6","cod6",2,100,120,3,1, $buy->getId() );
+    //    $product = $this->createProduct("nombre1","model1","descripcion1","cod1",2,100,160,1,1, $buy->getId() );
+        $product = $this->createProduct("nombre2","model2","descripcion2","cod2",3,150,180,2,3, $buy->getId() );
+        
         //categorys
         $this->addCategorys( $product,[1,2,20,"as"] );
 
         $this->productService->save($product);
         // la compra y el monto a modificar
-        $this->updatePriceTotalBuy($buy->getId(), 200);
+        $this->updatePriceTotalBuy($buy->getId(), $product->getUnitPrice() * $product->getBuyQuantity() );
 
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
@@ -82,7 +84,7 @@ class ProductController extends GenericController
         $buy = $this->session->get('currentBuy');
 
         //--- ID Producto y cantidad a devolver
-        $this->updateRepaymentProduct(19, 1 );
+        $this->updateRepaymentProduct( 8, 1 );
 
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
