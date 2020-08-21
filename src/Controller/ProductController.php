@@ -109,7 +109,17 @@ class ProductController extends GenericController
     }
 
 
-    //*****  editar producto
 
+    //>>>>>>>>>>>>>><< funciones <<<<<<<<<<<
+    /**
+     * @Route("/productos/listar", name="listProducts")
+     */
+    public function listAllBuys()
+    {   //eliminar la session de la compra 
+        $listaProducts=$this->productService->getAll();
+        
+        //redireccionar
+        return $this->json($listaProducts, 201);
+    }
 
 }
