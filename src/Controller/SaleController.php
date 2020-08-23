@@ -36,6 +36,7 @@ class SaleController extends GenericController
 
         return $this->render('sale/index.html.twig', [ 'controller_name' => 'SaleController', ]);
     }
+    
 
     /**
      * @Route("/ventas/finalizar", name="closeSale")
