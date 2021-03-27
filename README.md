@@ -13,9 +13,9 @@ ademas de las funciones de reportes y paginacion
 
 
 ##### compra ( buy )
-registra una compra con una lista de productos (categoria, genero, temporada), y un medio de pago
+registra una compra con una lista de productos (categoria, genero, temporada), y un medio de pago (efectivo o debito)
 ##### venta ( sale )
-registra una venta con una lista de **items** (product, cantidad, subtotal), un medio de pago y actualiza  el **Stock** de cada producto 
+registra una venta con una lista de **items** (product, cantidad, subtotal), un medio de pago (efectivo o debito) y actualiza  el **Stock** de cada producto 
 
 
 ##### reportes --varios
