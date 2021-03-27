@@ -28,4 +28,4 @@ registra una venta con una lista de **items** (product, cantidad, subtotal), un 
 > * \...
 
 
-plataforma BackEnd API REST de compra, venta y administracion de stock con **symfony 4**, fosrestbundle ,doctrine ORM 
+plataforma BackEnd API REST de compra, venta y administracion de stock con **symfony 4**, fosrestbundle, doctrine ORM 
