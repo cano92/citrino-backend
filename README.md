@@ -7,6 +7,8 @@ Citrino es un ABM de Articulos (Product) donde el usuario Administra el stock de
 
 ademas de las funciones de reportes, paginacion y busquedas vaarias de articulos 
 
+lleva una implementacion de **API REST** con **Symfony 4**
+
 #### UML
 
 ![uml](uml/citrino.png)
