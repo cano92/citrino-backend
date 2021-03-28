@@ -1,11 +1,11 @@
 
 ## Citrino
 
-ABM de Articulos (Product) donde el usuario Administra el stock de productos atravez de funciones(transacciones) realizando
+Citrino es un ABM de Articulos (Product) donde el usuario Administra el stock de productos atravez de funciones(transacciones) realizando
 
-***comprar( buy )***    y/o   ***vender( sale )***
+***compras( buy )***    y/o   ***ventas( sale )***
 
-ademas de las funciones de reportes y paginacion 
+ademas de las funciones de reportes, paginacion y busquedas vaarias de articulos 
 
 #### UML
 
